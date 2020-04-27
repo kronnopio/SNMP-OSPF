@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
+use lib "lib/";
+
 use SNMP::Info;
-use Data::Dumper;
 use Text::ASCIITable;
 
 $ip = $ARGV[0];
@@ -15,14 +16,8 @@ my $l3 = new SNMP::Info(
                        )
    or die "Can't connect to DestHost.\n";
  
-my $class = $l3->class();
-print "SNMP::Info determined this device to fall under subclass : $class\n";
+#my $class = $l3->class();
  
-# Let's get some basic Port information
-#my $interfaces = $l3->interfaces();
-#my $i_up       = $l3->i_up();
-#my $i_speed    = $l3->i_speed();
-my $ospf1	=$l3->router_ip();
 my $peers = $l3->ospf_peers();
 my $id_peers = $l3->ospf_peer_id();
 my $state_peers = $l3->ospf_peer_state();
@@ -34,7 +29,6 @@ foreach my $iid (keys %$peers) {
    my $id  = $id_peers->{$iid};
     my $state  = $state_peers->{$iid};
     $t->addRow($iid,$id,$state);
-    #print "|\t $iid \t | $id \t | $state |\n";
 }
 
 print $t;
@@ -53,12 +47,12 @@ my $state	=	$l3->ospf_if_state();
 
 
 foreach my $iip (keys %$ip){
-    $aarea = $ip->{$iip};
-    $ttype = $type->{$iip};
-    $hhello = $hello->{$iip};
-    $ddead = $dead->{$iip};
-    $aadmin = $admin->{$iip};
-    $sstate= $state->{$iip};
+    my $aarea = $ip->{$iip};
+    my $ttype = $type->{$iip};
+    my $hhello = $hello->{$iip};
+    my $ddead = $dead->{$iip};
+    my $aadmin = $admin->{$iip};
+    my $sstate= $state->{$iip};
     $t2->addRow($iip,$aarea,$ttype,$hhello,$ddead,$aadmin,$sstate);
 }
 
