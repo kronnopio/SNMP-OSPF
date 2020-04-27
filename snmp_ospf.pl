@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use lib "lib/";
+BEGIN { push @INC, $ENV{PWD}.'/lib';} 
 
 use SNMP::Info;
 use Text::ASCIITable;
