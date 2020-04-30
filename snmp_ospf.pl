@@ -12,7 +12,8 @@ my $l3 = new SNMP::Info(
                          #Debug       => 1,
                          DestHost    => $ip,
                          Community   => $comu,
-                         Version     => 2
+                         Version     => 2,
+			 MibDirs           => ['./mibs/']
                        )
    or die "Can't connect to DestHost.\n";
  
